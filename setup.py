@@ -8,7 +8,6 @@ with open('README.md') as readme_file:
 
 requirements = [
     "brainio @ git+https://github.com/brain-score/brainio",
-    "brain-score @ git+https://github.com/brain-score/brain-score",
     "h5py",
     "Pillow",
     "numpy",
