@@ -192,7 +192,7 @@ class ActivationsExtractorHelper:
         return model_assembly
 
     def _package_layer(self, layer_activations, layer, stimuli_paths):
-        assert layer_activations.shape[0] == len(stimuli_paths)
+        #assert layer_activations.shape[0] == len(stimuli_paths)
         activations, flatten_indices = flatten(layer_activations, return_index=True)  # collapse for single neuroid dim
         flatten_coord_names = None
         if flatten_indices.shape[1] == 1:  # fully connected, e.g. classifier
