@@ -39,6 +39,26 @@ class TensorflowWrapper:
         g.add_node("logits", object=self.logits, type=type(self.logits))
         return g
 
+    
+    def get_weights(self, layer_names=None):
+        if layer_names is None:
+            layer_names = self._endpoints.keys()
+
+        weight_tensors = OrderedDict()
+        for name in layer_names:
+            try:
+                # Attempt to access the kernel (weights) of the layer by name
+                weight_tensor = self._session.graph.get_tensor_by_name(f"{name}/kernel:0")
+                weight_tensors[name] = weight_tensor
+            except KeyError:
+                # If the layer does not have weights or naming convention differs
+                print(f"No weights found for layer: {name}")
+                continue
+
+        # Fetch the weights from the session
+        weights = self._session.run(weight_tensors)
+        return weights
+
 
 class TensorflowSlimWrapper(TensorflowWrapper):
     def __init__(self, *args, labels_offset=1, **kwargs):
